@@ -47,17 +47,17 @@ local function createESP(player)
         local character = player.Character
         if character and character:FindFirstChild("HumanoidRootPart") and character:FindFirstChildOfClass("Humanoid") and character.Humanoid.Health > 0 then
             
-            -- Точный расчет границ персонажа по CFrame и Size
+    
             local cframe, size = character:GetBoundingBox()
             local hrpPos, onScreen = Camera:WorldToViewportPoint(cframe.Position)
 
             if onScreen then
-                -- Верхняя и нижняя точки персонажа
+       
                 local topPos = Camera:WorldToViewportPoint((cframe * CFrame.new(0, size.Y / 2, 0)).Position)
                 local bottomPos = Camera:WorldToViewportPoint((cframe * CFrame.new(0, -size.Y / 2, 0)).Position)
 
                 local height = math.abs(topPos.Y - bottomPos.Y)
-                local width = height * 0.65 -- Пропорциональная ширина под модель персонажа
+                local width = height * 0.65
 
                 -- 1. Box ESP
                 if ESP.Boxes then
@@ -113,21 +113,21 @@ for _, player in ipairs(Players:GetPlayers()) do
 end
 Players.PlayerAdded:Connect(createESP)
 
--- Элементы управления Rayfield
+
 Tab:CreateToggle({
-   Name = "Enable Boxes (Обводка)",
+   Name = "Enable Boxes",
    CurrentValue = false,
    Callback = function(Value) ESP.Boxes = Value end,
 })
 
 Tab:CreateToggle({
-   Name = "Enable Tracers (Линии)",
+   Name = "Enable Tracers",
    CurrentValue = false,
    Callback = function(Value) ESP.Tracers = Value end,
 })
 
 Tab:CreateToggle({
-   Name = "Enable Names (Ники)",
+   Name = "Enable Names",
    CurrentValue = false,
    Callback = function(Value) ESP.Names = Value end,
 })
